@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブログ記事</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <header>
+    <h1>簡易ブログ</h1>
+    <nav>
+      <a href="/blogs">ホーム</a>
+      <a href="/blogs/new">新規投稿</a>
+    </nav>
+  </header>
+
+  <main>
+    <article class="post">
+      <h2>
+        <%= blog.title %>
+      </h2>
+      <!-- # createdAtからformattedCreatedAtに変更 -->
+      <p>公開日: <%= blog.formattedCreatedAt %>
+      </p>
+      <p>
+        <%= blog.content %>
+      </p>
+    </article>
+
+    <div class="post-controls">
+      <a href="/blogs/edit/<%= blog.id %>" class="btn">記事を編集</a>
+      <!-- # 削除ボタンを作成 -->
+      <form action="/blogs/delete" method="post">
+        <input type="hidden" id="blogId" name="blogId" value="<%= blog.id %>">
+        <button type="submit" class="btn">記事を削除</button>
+      </form>
+      <a href="/blogs" class="btn">ホームに戻る</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2024 簡易ブログサイト</p>
+  </footer>
+</body>
+
+</html>
