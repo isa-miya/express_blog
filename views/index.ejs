@@ -9,27 +9,35 @@
 </head>
 
 <body>
-  <%- include('partials/header.ejs') %>
+  <header>
+    <h1>ブログ</h1>
+    <nav>
+      <a href="/blogs">ホーム</a>
+      <a href="/blogs/new">新規投稿</a>
+    </nav>
+  </header>
 
-    <main>
-      <h2>最新の記事</h2>
-      <div class="post-list">
-        <% allBlogs.forEach(blog=> { %>
-          <article class="post">
-            <h3>
-              <a href="/blogs/<%= blog.id %>">
-                <%= blog.title %>
-              </a>
-            </h3>
-            <p>
-              <%= blog.description %>
-            </p>
-          </article>
-          <% }); %>
-      </div>
-    </main>
+  <main>
+    <h2>最新の記事</h2>
+    <div class="post-list">
+      <% allBlogs.forEach(blog=> { %>
+        <article class="post">
+          <h3>
+            <a href="/blogs/<%= blog.id %>">
+              <%= blog.title %>
+            </a>
+          </h3>
+          <p>
+            <%= blog.description %>
+          </p>
+        </article>
+        <% }); %>
+    </div>
+  </main>
 
-    <%- include('partials/footer.ejs') %>
+  <footer>
+    <p>© 2024 ブログサイト</p>
+  </footer>
 </body>
 
 </html>
