@@ -22,7 +22,6 @@
       <h2>
         <%= blog.title %>
       </h2>
-      <!-- # createdAtからformattedCreatedAtに変更 -->
       <p>公開日: <%= blog.formattedCreatedAt %>
       </p>
       <p>
@@ -32,7 +31,6 @@
 
     <div class="post-controls">
       <a href="/blogs/edit/<%= blog.id %>" class="btn">記事を編集</a>
-      <!-- # 削除ボタンを作成 -->
       <form action="/blogs/delete" method="post">
         <input type="hidden" id="blogId" name="blogId" value="<%= blog.id %>">
         <button type="submit" class="btn">記事を削除</button>
