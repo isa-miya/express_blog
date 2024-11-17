@@ -9,12 +9,12 @@
 </head>
 
 <body>
-  <!-- # header.ejsをinclude -->
   <%- include('partials/header.ejs') %>
 
     <div class="form-container">
       <h2>ログイン</h2>
-      <form action="/login" method="POST">
+      <!-- # formのアクションをサーバーのエンドポイントに編集 -->
+      <form action="/auth/login" method="POST">
         <div class="form-group">
           <label for="email">メールアドレス</label>
           <input type="email" id="email" name="email" required>
@@ -28,7 +28,6 @@
       <p>アカウントをお持ちでない方は、<a href="/auth/signup">サインアップ</a></p>
     </div>
 
-    <!-- # footer.ejsをinclude -->
     <%- include('partials/footer.ejs') %>
 </body>
 

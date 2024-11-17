@@ -3,5 +3,12 @@
   <nav>
     <a href="/blogs">ホーム</a>
     <a href="/blogs/new">新規投稿</a>
+    <% if (isAuthenticated){ %>
+      <form action="/auth/logout" method="post">
+        <button type="submit" class="btn-warning">ログアウト</button>
+      </form>
+      <% } else { %>
+        <a href="/auth/login" class="btn">ログイン</a>
+        <% } %>
   </nav>
 </header>

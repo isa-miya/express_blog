@@ -9,34 +9,36 @@
 </head>
 
 <body>
-  <!-- # header.ejsをinclude -->
   <%- include('partials/header.ejs') %>
 
     <div class="form-container">
       <h2>サインアップ</h2>
-      <form action="/signup" method="POST">
+      <form action="/auth/signup" method="POST">
         <div class="form-group">
           <label for="username">ユーザー名</label>
-          <input type="text" id="username" name="username" required>
+          <input type="text" id="username" name="username" value="<%= typeof username !== 'undefined' ? username: ''%>"
+            required>
         </div>
         <div class="form-group">
           <label for="email">メールアドレス</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" id="email" name="email" value="<%= typeof email !== 'undefined' ? email: '' %>" required>
         </div>
         <div class="form-group">
           <label for="password">パスワード</label>
           <input type="password" id="password" name="password" required>
         </div>
         <div class="form-group">
-          <label for="confirm-password">パスワード（確認用）</label>
-          <input type="password" id="confirm-password" name="confirm-password" required>
+          <label for="confirm_password">パスワード（確認用）</label>
+          <input type="password" id="confirm_password" name="confirm_password" required>
         </div>
-        <button type="submit" class="btn">サインアップ</button>
+        <% if (typeof error !=='undefined' && error) { %>
+          <%= error %>
+            <% } %>
+              <button type="submit" class="btn">サインアップ</button>
       </form>
       <p>既にアカウントをお持ちですか？<a href="/auth/login">ログイン</a></p>
     </div>
 
-    <!-- # footer.ejsをinclude -->
     <%- include('partials/footer.ejs') %>
 </body>
 

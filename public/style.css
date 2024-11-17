@@ -12,6 +12,12 @@ header {
   text-align: center;
 }
 
+header nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 header nav a {
   color: white;
   margin: 0 10px;
@@ -20,6 +26,10 @@ header nav a {
 
 header nav a:hover {
   text-decoration: underline;
+}
+
+header h1 {
+  color: white;
 }
 
 main {

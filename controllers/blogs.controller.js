@@ -18,12 +18,14 @@ exports.getNewBlog = (req, res) => {
 // * 記事投稿アクション
 exports.postNewBlog = async (req, res) => {
   const { title, description, content } = req.body;
+
   try {
     await prisma.blog.create({
       data: {
         title,
         description,
-        content
+        content,
+        authorId: req.user.userId
       }
     });
     res.redirect('/blogs');
@@ -37,6 +39,9 @@ exports.getEditBlog = async (req, res) => {
   const blogId = parseInt(req.params.id);
   try {
     const blog = await prisma.blog.findUnique({ where: { id: blogId } });
+    if (blog.authorId !== req.user.userId) {
+      return res.status(403).send('権限エラーです');
+    }
     res.render('edit-post', { blog });
   } catch (error) {
     res.status(500).send('Error');
@@ -46,6 +51,10 @@ exports.getEditBlog = async (req, res) => {
 exports.postEditBlog = async (req, res) => {
   const { blogId, title, description, content } = req.body;
   try {
+    const blog = await prisma.blog.findUnique({ where: { id: parseInt(blogId) } });
+    if (blog.authorId !== req.user.userId) {
+      return res.status(403).send('権限エラーです');
+    };
     await prisma.blog.update({
       where: { id: parseInt(blogId) },
       data: {
@@ -63,7 +72,12 @@ exports.postEditBlog = async (req, res) => {
 // * 記事削除アクション
 exports.postDeleteBlog = async (req, res) => {
   const { blogId } = req.body;
+
   try {
+    const blog = await prisma.blog.findUnique({ where: { id: parseInt(blogId) } });
+    if (blog.authorId !== req.user.userId) {
+      return res.status(403).send('権限エラーです');
+    }
     await prisma.blog.delete({
       where: { id: parseInt(blogId) }
     });
@@ -78,13 +92,13 @@ exports.getSingleBlog = async (req, res) => {
   const blogId = parseInt(req.params.id);
   try {
     const blog = await prisma.blog.findUnique({ where: { id: blogId } });
-    // # 以下のコードを追加
     blog.formattedCreatedAt = blog.createdAt.toLocaleDateString('ja-JP', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
-    res.render('post', { blog });
+    const isAuthor = req.user && blog.authorId === req.user.userId;
+    res.render('post', { blog, isAuthor });
   } catch (error) {
     res.status(500).send('Error');
   }
