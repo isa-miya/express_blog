@@ -4,7 +4,15 @@ const prisma = new PrismaClient();
 // * 記事一覧取得のアクション
 exports.getAllBlogs = async (req, res) => {
   try {
-    const allBlogs = await prisma.blog.findMany();
+    const allBlogs = await prisma.blog.findMany({
+      include: {
+        author: {
+          select: {
+            name: true
+          }
+        }
+      }
+    });
     res.render('index', { allBlogs });
   } catch (error) {
     res.status(500).send('Error');

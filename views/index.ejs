@@ -9,7 +9,6 @@
 </head>
 
 <body>
-  <!-- # header.ejsをinclude -->
   <%- include('partials/header.ejs') %>
 
     <main>
@@ -25,12 +24,16 @@
             <p>
               <%= blog.description %>
             </p>
+            <p>
+              <small>
+                Posted by: <%= blog.author.name %>
+              </small>
+            </p>
           </article>
           <% }); %>
       </div>
     </main>
 
-    <!-- # footer.ejsをinclude -->
     <%- include('partials/footer.ejs') %>
 </body>
 
