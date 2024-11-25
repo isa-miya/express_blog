@@ -20,7 +20,8 @@
         <p>公開日: <%= blog.formattedCreatedAt %>
         </p>
         <p>
-          <%= blog.content %>
+          <%- sanitizedContentHtml %>
+            <%# contentHtml %>
         </p>
       </article>
 

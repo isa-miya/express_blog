@@ -1,5 +1,12 @@
 const { PrismaClient } = require('@prisma/client');
+const { marked } = require('marked');
+const { JSDOM } = require('jsdom');
+const createDOMPurify = require('dompurify');
+
 const prisma = new PrismaClient();
+
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
 
 // * 記事一覧取得のアクション
 exports.getAllBlogs = async (req, res) => {
@@ -105,9 +112,13 @@ exports.getSingleBlog = async (req, res) => {
       month: 'long',
       day: 'numeric'
     });
+    const contentHtml = marked.parse(blog.content);
+    const sanitizedContentHtml = DOMPurify.sanitize(contentHtml);
+
     const isAuthor = req.user && blog.authorId === req.user.userId;
-    res.render('post', { blog, isAuthor });
+    res.render('post', { blog, isAuthor, sanitizedContentHtml, contentHtml });
   } catch (error) {
+    console.error(error);
     res.status(500).send('Error');
   }
 };
